@@ -1,0 +1,101 @@
+/* ReHome Core Theme Tokens */
+:root {
+  --color-charcoal: #222222;
+  --color-cream: #FFFFFF;
+  --color-beige: #F5F5F0;
+  --color-terracotta: #C86D51;
+  --color-sage: #8A9A86;
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --spacing-unit: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-beige);
+  color: var(--color-charcoal);
+  line-height: 1.5;
+}
+
+/* Layout Elements */
+header {
+  background-color: var(--color-cream);
+  border-bottom: 1px solid #E0E0E0;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--color-charcoal);
+  font-weight: 500;
+}
+
+main {
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+footer {
+  background-color: var(--color-charcoal);
+  color: var(--color-cream);
+  text-align: center;
+  padding: 24px;
+  margin-top: 64px;
+}
+
+/* Components */
+.btn-primary {
+  background-color: var(--color-terracotta);
+  color: var(--color-cream);
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+.badge-sage {
+  background-color: var(--color-sage);
+  color: var(--color-cream);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: var(--color-cream);
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #E0E0E0;
+}
+
+.error-text {
+  color: var(--color-terracotta);
+  font-size: 13px;
+  margin-top: 4px;
+  display: block;
+}
