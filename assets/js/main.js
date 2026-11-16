@@ -1,7 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   // ========================================================
-  // 1. Client-Side Form Validation (create-listing.php)
+  // 1. Show / Hide Password Toggle (login.php & register.php)
+  // ========================================================
+  const toggleButtons = document.querySelectorAll('.toggle-password');
+
+  toggleButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('data-target');
+      const passwordInput = document.getElementById(targetId);
+
+      if (passwordInput) {
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          button.textContent = 'Hide';
+        } else {
+          passwordInput.type = 'password';
+          button.textContent = 'Show';
+        }
+      }
+    });
+  });
+
+  // ========================================================
+  // 2. Client-Side Form Validation (create-listing.php)
   // ========================================================
   const listingForm = document.getElementById('listingForm');
 
@@ -13,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const price = document.getElementById('price');
       const category = document.getElementById('category');
 
-      // Reset errors
       document.querySelectorAll('.error-text').forEach(el => el.textContent = '');
 
       if (!title.value.trim()) {
@@ -32,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (!isValid) {
-        e.preventDefault(); // Stop PHP submission if JS validation fails
+        e.preventDefault();
       }
     });
   }
@@ -45,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ========================================================
-  // 2. Meaningful Interaction #1: Live Listing Preview
+  // 3. Meaningful Interaction #1: Live Listing Preview
   // ========================================================
   const titleInput = document.getElementById('title');
   const priceInput = document.getElementById('price');
@@ -75,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ========================================================
-  // 3. Meaningful Interaction #2: Dynamic Moving Sale Summary
+  // 4. Meaningful Interaction #2: Dynamic Moving Sale Summary
   // ========================================================
   const bundleItems = [];
   const addItemBtn = document.getElementById('add-to-bundle-btn');
@@ -104,24 +125,3 @@ document.addEventListener('DOMContentLoaded', () => {
     if (totalValueEl) totalValueEl.textContent = `KSh ${totalValue.toLocaleString()}`;
   }
 });
-// ========================================================
-  // 4. Show / Hide Password Toggle (login.php & register.php)
-  // ========================================================
-  const toggleButtons = document.querySelectorAll('.toggle-password');
-
-  toggleButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const targetId = button.getAttribute('data-target');
-      const passwordInput = document.getElementById(targetId);
-
-      if (passwordInput) {
-        if (passwordInput.type === 'password') {
-          passwordInput.type = 'text';
-          button.textContent = 'Hide';
-        } else {
-          passwordInput.type = 'password';
-          button.textContent = 'Show';
-        }
-      }
-    });
-  });

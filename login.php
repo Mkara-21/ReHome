@@ -43,11 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form method="POST" action="login.php" style="margin-top: 16px;">
                 <div style="margin-bottom: 16px;">
                     <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required style="width:100%; padding: 8px;">
+                    <input type="email" id="email" name="email" required style="width:100%; padding: 8px; margin-top: 4px;">
                 </div>
                 <div style="margin-bottom: 16px;">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required style="width:100%; padding: 8px;">
+                    <div style="display: flex; gap: 8px; margin-top: 4px;">
+                        <input type="password" id="password" name="password" required style="flex: 1; padding: 8px;">
+                        <button type="button" class="toggle-password" data-target="password" style="padding: 8px 12px; cursor: pointer; background: var(--color-beige); border: 1px solid #CCC; border-radius: 4px;">Show</button>
+                    </div>
                 </div>
                 <button type="submit" class="btn-primary" style="width: 100%;">Log In</button>
             </form>
