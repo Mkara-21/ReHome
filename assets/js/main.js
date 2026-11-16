@@ -104,3 +104,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (totalValueEl) totalValueEl.textContent = `KSh ${totalValue.toLocaleString()}`;
   }
 });
+// ========================================================
+  // 4. Show / Hide Password Toggle (login.php & register.php)
+  // ========================================================
+  const toggleButtons = document.querySelectorAll('.toggle-password');
+
+  toggleButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('data-target');
+      const passwordInput = document.getElementById(targetId);
+
+      if (passwordInput) {
+        if (passwordInput.type === 'password') {
+          passwordInput.type = 'text';
+          button.textContent = 'Hide';
+        } else {
+          passwordInput.type = 'password';
+          button.textContent = 'Show';
+        }
+      }
+    });
+  });
