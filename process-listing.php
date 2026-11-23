@@ -2,7 +2,6 @@
 session_start();
 require_once 'includes/db.php';
 
-// Security: Require login
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit;
@@ -19,14 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description     = trim($_POST['description'] ?? '');
     $user_id         = $_SESSION['user_id'];
 
-    // Server-Side Validation (PHP Guardrail)
     if (empty($title)) $errors[] = "Item title is required.";
     if (!$price || $price <= 0) $errors[] = "Please enter a valid price in KSh.";
     if (!$category_id) $errors[] = "Please select a valid category.";
     if (empty($description)) $errors[] = "Description is required.";
 
-    // Secure Image Upload Processing
     $image_filename = 'default-item.jpg';
+
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $fileTmpPath   = $_FILES['image']['tmp_name'];
         $fileName      = $_FILES['image']['name'];
@@ -34,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp'];
         if (in_array($fileExtension, $allowedExtensions)) {
-            // Generate unique name to prevent overwriting
             $image_filename = uniqid('item_', true) . '.' . $fileExtension;
             $uploadFileDir  = 'assets/uploads/';
 
@@ -42,25 +39,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 mkdir($uploadFileDir, 0755, true);
             }
 
-            move_uploaded_path($fileTmpPath, $uploadFileDir . $image_filename);
+            if (!move_uploaded_file($fileTmpPath, $uploadFileDir . $image_filename)) {
+                $errors[] = "Failed to save uploaded image.";
+            }
         } else {
             $errors[] = "Invalid image file type. Allowed: JPG, PNG, WEBP.";
         }
     }
 
-    // Insert into MySQL via Prepared Statements
     if (empty($errors)) {
         $sql = "INSERT INTO listings (user_id, category_id, title, description, price, item_condition, transition_type, image_url, status) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
         $stmt = $pdo->prepare($sql);
         
         if ($stmt->execute([$user_id, $category_id, $title, $description, $price, $item_condition, $transition_type, $image_filename])) {
-            $_SESSION['flash_message'] = "Your listing has been submitted for admin approval!";
+            $_SESSION['flash_message'] = "Success! Your listing has been submitted and is pending admin approval.";
             header('Location: dashboard.php');
             exit;
         } else {
-            $errors[] = "Failed to save listing. Please try again.";
+            $errors[] = "Database error while saving listing.";
         }
     }
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submission Error - ReHome</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <?php require_once 'includes/header.php'; ?>
+    <main style="max-width: 600px;">
+        <section class="card">
+            <h2>Could Not Submit Listing</h2>
+            <ul style="margin: 16px 0 24px 20px; color: var(--color-terracotta);">
+                <?php foreach ($errors as $error): ?>
+                    <li><?php echo htmlspecialchars($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+            <a href="create-listing.php" class="btn-primary" style="text-decoration: none;">Go Back & Fix</a>
+        </section>
+    </main>
+    <?php require_once 'includes/footer.php'; ?>
