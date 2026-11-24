@@ -45,14 +45,34 @@ $pendingQueue = $stmt->fetchAll();
 </head>
 <body>
 
-    <header>
-        <h1>ReHome Admin Portal</h1>
-        <nav>
-            <ul>
-                <li><a href="../dashboard.php">User View</a></li>
-                <li><a href="../logout.php">Logout</a></li>
-            </ul>
-        </nav>
+   <?php $current_admin_page = basename($_SERVER['PHP_SELF']); ?>
+   <header>
+      <div class="logo">
+          <a href="dashboard.php" style="text-decoration: none; color: var(--color-charcoal);">
+              <h1>ReHome Admin Portal</h1>
+          </a>
+      </div>
+      <nav>
+          <ul>
+              <li>
+                  <a href="dashboard.php" class="<?php echo ($current_admin_page === 'dashboard.php') ? 'active-nav' : ''; ?>">
+                    🛡️ Admin Dashboard
+                  </a>
+              </li>
+              <li>
+                  <a href="../index.php">Home</a>
+              </li>
+              <li>
+                 <a href="../browse.php">Marketplace</a>
+              </li>
+              <li>
+                  <a href="../dashboard.php">User View</a>
+              </li>
+              <li>
+                  <a href="../logout.php">Logout</a>
+              </li>
+          </ul>
+      </nav>
     </header>
 
     <main>

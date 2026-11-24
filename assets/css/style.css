@@ -45,6 +45,26 @@ nav a {
   font-weight: 500;
 }
 
+nav a {
+  text-decoration: none;
+  color: var(--color-charcoal);
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+nav a:hover {
+  background-color: var(--color-beige);
+}
+
+/* Highlights the current active page in the header */
+nav a.active-nav {
+  background-color: var(--color-terracotta);
+  color: var(--color-cream);
+  font-weight: 600;
+}
+
 main {
   max-width: 1200px;
   margin: 32px auto;
@@ -98,4 +118,29 @@ footer {
   font-size: 13px;
   margin-top: 4px;
   display: block;
+}
+
+/* Responsive Mobile & Tablet Adjustments */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  main {
+    margin: 16px auto;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }

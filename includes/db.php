@@ -15,6 +15,7 @@ $options = [
 try {
      $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (\PDOException $e) {
-     throw new \PDOException($e->getMessage(), (int)$e->getCode());
+    error_log($e->getMessage()); // Logs technical error silently on server
+    die("We are experiencing temporary technical difficulties. Please try again later.");
 }
 ?>
